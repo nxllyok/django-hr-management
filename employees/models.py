@@ -88,3 +88,28 @@ class EmployeeSkill(models.Model):
 
     def __str__(self):
         return f"{self.employee} — {self.skill}: {self.level}/10"
+
+
+class EmployeeImage(models.Model):
+    employee = models.ForeignKey(
+        Employee,
+        on_delete=models.CASCADE,
+        related_name="gallery",
+        verbose_name="Сотрудник",
+    )
+    image = models.ImageField(
+        upload_to="employees/gallery/%Y/%m/",
+        verbose_name="Изображение",
+    )
+    order = models.PositiveIntegerField(
+        default=0,
+        verbose_name="Порядковый номер",
+    )
+
+    class Meta:
+        verbose_name = "Фотография сотрудника"
+        verbose_name_plural = "Галерея фотографий"
+        ordering = ["order", "id"]
+
+    def __str__(self):
+        return f"{self.employee} — фото {self.order}"

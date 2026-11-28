@@ -15,4 +15,3 @@ class WorkplaceAdmin(admin.ModelAdmin):
         "employee__first_name",
         "employee__last_name",
     )
-    list_filter = ("employee",)

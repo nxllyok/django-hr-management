@@ -1,11 +1,18 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
-from .models import Employee, EmployeeSkill, Skill
+from .models import Employee, EmployeeImage, EmployeeSkill, Skill
+
+
+class EmployeeImageInline(admin.TabularInline):
+    model = EmployeeImage
+    extra = 1
 
 
 @admin.register(Employee)
 class EmployeeAdmin(UserAdmin):
+    inlines = [EmployeeImageInline]
+
     list_display = (
         "username",
         "first_name",
@@ -14,27 +21,13 @@ class EmployeeAdmin(UserAdmin):
         "gender",
         "is_staff",
     )
-    search_fields = (
-        "username",
-        "first_name",
-        "last_name",
-        "email",
-    )
-    list_filter = (
-        "gender",
-        "is_staff",
-        "is_active",
-    )
+    search_fields = ("username", "first_name", "last_name", "email")
+    list_filter = ("gender", "is_staff", "is_active")
+
     fieldsets = UserAdmin.fieldsets + (
         (
             "Дополнительная информация",
-            {
-                "fields": (
-                    "middle_name",
-                    "gender",
-                    "description",
-                )
-            },
+            {"fields": ("middle_name", "gender", "description")},
         ),
     )
 

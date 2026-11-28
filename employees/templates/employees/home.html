@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Главная | Synergy{% endblock %}
+
+{% block content %}
+
+<section class="hero">
+    <div class="container hero-content">
+        <p class="eyebrow">ЛЮДИ. ТАЛАНТ. РЕЗУЛЬТАТ.</p>
+
+        <h1>
+            Вместе создаём
+            <span>больше.</span>
+        </h1>
+
+        <p class="hero-description">
+            Synergy — пространство профессионального роста,
+            сотрудничества и новых возможностей.
+            Познакомьтесь с нашей командой и её навыками.
+        </p>
+
+        <a class="primary-button" href="{% url 'employees:employee_list' %}">
+            Наша команда
+        </a>
+    </div>
+</section>
+
+<section class="section container">
+    <div class="section-heading">
+        <div>
+            <p class="eyebrow">НАША КОМАНДА</p>
+            <h2>Люди, которые создают Synergy</h2>
+        </div>
+
+        <a class="text-link" href="{% url 'employees:employee_list' %}">
+            Все сотрудники →
+        </a>
+    </div>
+
+    <div class="employee-grid">
+        {% for employee in employees %}
+            {% include "includes/employee_card.html" with employee=employee %}
+        {% empty %}
+            <p>Пока сотрудники не добавлены.</p>
+        {% endfor %}
+    </div>
+</section>
+
+{% endblock %}

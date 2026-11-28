@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Вход | Synergy{% endblock %}
+
+{% block content %}
+
+<section class="login-section">
+    <div class="login-card">
+        <p class="eyebrow">ДОБРО ПОЖАЛОВАТЬ</p>
+        <h1>Вход в систему</h1>
+
+        {% if form.errors %}
+            <p class="error-message">
+                Неверное имя пользователя или пароль.
+            </p>
+        {% endif %}
+
+        <form method="post">
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <input type="hidden" name="next" value="{{ next }}">
+
+            <button type="submit" class="primary-button">
+                Войти
+            </button>
+        </form>
+    </div>
+</section>
+
+{% endblock %}
