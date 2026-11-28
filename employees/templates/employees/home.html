@@ -28,8 +28,13 @@
 <section class="section container">
     <div class="section-heading">
         <div>
-            <p class="eyebrow">НАША КОМАНДА</p>
-            <h2>Люди, которые создают Synergy</h2>
+            <p class="eyebrow">SYNERGY В ЦИФРАХ</p>
+            <h2>Наша команда</h2>
+            <p class="muted">
+                Сейчас в нашей команде
+                <strong>{{ employee_count }}</strong>
+                сотрудников.
+            </p>
         </div>
 
         <a class="text-link" href="{% url 'employees:employee_list' %}">

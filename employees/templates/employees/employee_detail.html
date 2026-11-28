@@ -12,19 +12,17 @@
 
     <div class="detail-header">
 
-        {% with profile_photo=employee.gallery.all|first %}
-            {% if profile_photo %}
-                <img
-                    class="detail-photo"
-                    src="{{ profile_photo.image.url }}"
-                    alt="{{ employee.first_name }} {{ employee.last_name }}"
-                >
-            {% else %}
-                <div class="detail-monogram">
-                    {{ employee.first_name|first|upper }}{{ employee.last_name|first|upper }}
-                </div>
-            {% endif %}
-        {% endwith %}
+        {% if main_photo %}
+            <img
+                class="detail-photo"
+                src="{{ main_photo.image.url }}"
+                alt="{{ employee.first_name }} {{ employee.last_name }}"
+            >
+        {% else %}
+            <div class="detail-monogram">
+                {{ employee.first_name|first|upper }}{{ employee.last_name|first|upper }}
+            </div>
+        {% endif %}
 
         <div class="detail-heading">
             <p class="eyebrow">ПРОФИЛЬ СОТРУДНИКА</p>
@@ -40,6 +38,22 @@
             <p class="muted">
                 Пол: {{ employee.get_gender_display|default:"Не указан" }}
             </p>
+
+            <p class="muted">
+                Должность: {{ employee.get_position_display }}
+            </p>
+
+            <p class="muted">
+                Стаж: {{ experience_days }} дней
+            </p>
+
+            {% if employee.workplace %}
+                <p class="muted">
+                    Рабочее место №{{ employee.workplace.desk_number }}
+                </p>
+            {% else %}
+                <p class="muted">Рабочее место не назначено</p>
+            {% endif %}
         </div>
 
     </div>
@@ -72,7 +86,7 @@
         <h2>Фотогалерея</h2>
 
         <div class="gallery-grid">
-            {% for photo in employee.gallery.all %}
+            {% for photo in extra_gallery %}
                 <div class="gallery-item">
                     <img
                         src="{{ photo.image.url }}"
@@ -81,7 +95,7 @@
                     <span>Фото {{ photo.order }}</span>
                 </div>
             {% empty %}
-                <p>Фотографии пока не добавлены.</p>
+                <p>Дополнительных фотографий пока нет.</p>
             {% endfor %}
         </div>
     </div>

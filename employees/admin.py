@@ -19,15 +19,56 @@ class EmployeeAdmin(UserAdmin):
         "last_name",
         "email",
         "gender",
+        "position",
+        "hire_date",
         "is_staff",
     )
-    search_fields = ("username", "first_name", "last_name", "email")
-    list_filter = ("gender", "is_staff", "is_active")
+
+    search_fields = (
+        "username",
+        "first_name",
+        "last_name",
+        "email",
+    )
+
+    list_filter = (
+        "gender",
+        "position",
+        "hire_date",
+        "is_staff",
+        "is_active",
+    )
 
     fieldsets = UserAdmin.fieldsets + (
         (
             "Дополнительная информация",
-            {"fields": ("middle_name", "gender", "description")},
+            {
+                "fields": (
+                    "middle_name",
+                    "gender",
+                    "position",
+                    "hire_date",
+                    "description",
+                )
+            },
+        ),
+    )
+
+    add_fieldsets = UserAdmin.add_fieldsets + (
+        (
+            "Дополнительная информация",
+            {
+                "fields": (
+                    "first_name",
+                    "last_name",
+                    "email",
+                    "middle_name",
+                    "gender",
+                    "position",
+                    "hire_date",
+                    "description",
+                )
+            },
         ),
     )
 

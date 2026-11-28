@@ -2,6 +2,7 @@ from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
+from django.utils import timezone
 
 
 class Skill(models.Model):
@@ -23,6 +24,12 @@ class Employee(AbstractUser):
         FEMALE = "F", "Женский"
         OTHER = "O", "Другой"
 
+    class Position(models.TextChoices):
+        BACKEND = "BACKEND", "Backend-разработчик"
+        FRONTEND = "FRONTEND", "Frontend-разработчик"
+        TESTER = "TESTER", "Тестировщик"
+        OTHER = "OTHER", "Другое"
+
     middle_name = models.CharField(
         max_length=150,
         blank=True,
@@ -33,6 +40,16 @@ class Employee(AbstractUser):
         choices=Gender.choices,
         blank=True,
         verbose_name="Пол",
+    )
+    position = models.CharField(
+        max_length=20,
+        choices=Position.choices,
+        default=Position.OTHER,
+        verbose_name="Должность",
+    )
+    hire_date = models.DateField(
+        default=timezone.localdate,
+        verbose_name="Дата приёма на работу",
     )
     description = models.TextField(
         blank=True,
