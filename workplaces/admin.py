@@ -5,5 +5,14 @@ from .models import Workplace
 
 @admin.register(Workplace)
 class WorkplaceAdmin(admin.ModelAdmin):
-    list_display = ("name", "address")
-    search_fields = ("name", "address")
+    list_display = (
+        "desk_number",
+        "employee",
+        "description",
+    )
+    search_fields = (
+        "employee__username",
+        "employee__first_name",
+        "employee__last_name",
+    )
+    list_filter = ("employee",)

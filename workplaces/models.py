@@ -1,24 +1,29 @@
+from django.conf import settings
 from django.db import models
 
 
 class Workplace(models.Model):
-    name = models.CharField(
-        max_length=150,
-        verbose_name="Название рабочего места",
+    desk_number = models.PositiveIntegerField(
+        unique=True,
+        verbose_name="Номер рабочего места",
     )
-    address = models.CharField(
-        max_length=255,
-        verbose_name="Адрес",
+    employee = models.OneToOneField(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="workplace",
+        verbose_name="Сотрудник",
     )
     description = models.TextField(
         blank=True,
-        verbose_name="Описание",
+        verbose_name="Дополнительная информация",
     )
-
-    def __str__(self):
-        return self.name
 
     class Meta:
         verbose_name = "Рабочее место"
         verbose_name_plural = "Рабочие места"
-        ordering = ["name"]
+        ordering = ["desk_number"]
+
+    def __str__(self):
+        return f"Рабочее место №{self.desk_number}"
